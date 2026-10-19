@@ -69,6 +69,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupReveal();
   setupStepNav();
   setupUpload();
+  loadExperiment().catch(e => { $('#expNote').textContent = e.message; });
   $('#detoxBtn').addEventListener('click', openDetox);
   $('#cardBtn').addEventListener('click', saveCard);
   $('#resetBtn').addEventListener('click', () => {
@@ -558,4 +559,117 @@ function setupStepNav() {
     links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id));
   }), { rootMargin: '-45% 0px -50% 0px' });
   $$('.step').forEach(s => io.observe(s));
+}
+
+// ---------- 우리 조 실험 (experiment.csv) ----------
+const EXP_COLORS = ['#1F45FF', '#E5484D', '#12A39A', '#E0A800', '#7A5AF8', '#8A93B8'];
+
+async function loadExperiment() {
+  let text = '';
+  try {
+    const res = await fetch('experiment.csv', { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    text = await res.text();
+  } catch (e) {
+    $('#expNote').textContent = `실험 기록(experiment.csv)을 읽지 못했어요: ${e.message}`;
+    return;
+  }
+  const rows = parseExperiment(text);
+  if (!rows.length) {
+    $('#expNote').replaceChildren('아직 실험 기록이 없어요 — 실험을 시작하면 experiment.csv 에 적은 숫자로 그래프가 그려져요. ',
+      h('button', { type: 'button', class: 'link', onclick: () => showExperiment(sampleExperiment(), true) }, '예시 그래프 보기'));
+    drawExperiment([]);
+    return;
+  }
+  showExperiment(rows, false);
+}
+
+function parseExperiment(text) {
+  const lines = text.replace(/^﻿/, '').split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+  if (lines.length < 2) return [];
+  const head = lines[0].split(',').map(s => s.trim());
+  const idx = k => head.indexOf(k);
+  const need = ['계정', '주제', '일차', '단계', '관련영상', '확인영상'];
+  if (need.some(k => idx(k) < 0)) throw new Error('experiment.csv 첫 줄은 「계정,주제,주입량,일차,단계,관련영상,확인영상」 이어야 해요');
+  return lines.slice(1).map(l => {
+    const c = l.split(',').map(s => s.trim());
+    const rel = Number(c[idx('관련영상')]), tot = Number(c[idx('확인영상')]) || 20, day = Number(c[idx('일차')]);
+    if (!c[idx('계정')] || !Number.isFinite(day) || !Number.isFinite(rel)) return null;
+    return { account: c[idx('계정')], topic: c[idx('주제')], dose: idx('주입량') >= 0 ? c[idx('주입량')] : '', day, phase: c[idx('단계')], share: rel / tot };
+  }).filter(Boolean);
+}
+
+function summarizeExperiment(rows) {
+  const by = new Map();
+  for (const r of rows) { if (!by.has(r.account)) by.set(r.account, []); by.get(r.account).push(r); }
+  return [...by.entries()].map(([account, list], i) => {
+    list.sort((a, b) => a.day - b.day);
+    const base = (list.find(r => r.phase === '기준') || list[0]).share;
+    const inject = list.filter(r => r.phase === '주입');
+    const recover = list.filter(r => r.phase === '회복');
+    const peak = inject.length ? Math.max(...inject.map(r => r.share)) : null;
+    const dyed = inject.find(r => r.share >= 0.5); // 홈 피드 절반이 그 주제로 찬 날
+    const firstRec = recover[0]?.day;
+    const back = recover.find(r => r.share <= base + 0.1); // 기준선 +10%p 안으로 돌아온 날
+    return {
+      account, topic: list[0].topic, dose: list[0].dose, list, base, peak,
+      control: /대조/.test(account + list[0].topic),
+      color: /대조/.test(account + list[0].topic) ? '#8A93B8' : EXP_COLORS[i % (EXP_COLORS.length - 1)],
+      dyedDay: dyed ? dyed.day : null,
+      recoverDays: back && firstRec != null ? back.day - firstRec + 1 : null,
+      recoverStart: firstRec ?? null, recovering: recover.length > 0,
+    };
+  });
+}
+
+function showExperiment(rows, isSample) {
+  const sums = summarizeExperiment(rows);
+  $('#expNote').textContent = isSample
+    ? '⚠ 예시 그래프예요 — 실제 실험 결과가 아니라 모양을 보여 주려고 만든 가상의 숫자예요.'
+    : `실험 기록 ${rows.length}줄 · 계정 ${sums.length}개 (experiment.csv)`;
+  const kp = $('#expKpis');
+  kp.hidden = false;
+  kp.replaceChildren(...sums.map(s => h('div', { class: 'kpi exp-kpi', style: `--c:${s.color}` },
+    h('span', {}, `${s.account} · ${s.topic}${s.dose ? ' · ' + s.dose : ''}`),
+    s.control ? h('b', {}, '비교용') : h('b', {}, s.dyedDay != null ? `${s.dyedDay}일` : '–'),
+    s.control ? h('small', {}, ' 주제 없이 홈만 봄') : h('small', {}, s.dyedDay != null ? '만에 절반이 물듦' : ' 아직 절반 안 됨'),
+    s.control ? h('em', {}, `최고 ${s.peak != null ? Math.round(s.peak * 100) + '%' : '–'}`) : h('em', {}, s.recovering ? (s.recoverDays != null ? `회복 ${s.recoverDays}일` : '회복 중 · 아직 안 돌아옴') : `최고 ${s.peak != null ? Math.round(s.peak * 100) + '%' : '–'}`))));
+  drawExperiment(sums);
+}
+
+function drawExperiment(sums) {
+  const box = $('#expChart');
+  const W = 640, H = 256, L = 40, R = 12, T = 14, B = 46;
+  const days = sums.flatMap(s => s.list.map(r => r.day));
+  const maxDay = days.length ? Math.max(...days) : 10, minDay = days.length ? Math.min(...days) : 0;
+  const x = d => L + (W - L - R) * ((d - minDay) / Math.max(1, maxDay - minDay));
+  const y = v => T + (H - T - B) * (1 - v);
+  const recStarts = sums.map(s => s.recoverStart).filter(v => v != null);
+  const shade = recStarts.length ? `<rect x="${x(Math.min(...recStarts) - 0.5)}" y="${T}" width="${x(maxDay) - x(Math.min(...recStarts) - 0.5)}" height="${H - T - B}" fill="var(--surface-2)" opacity=".7"/>` : '';
+  const grid = [0, 0.5, 1].map(v => `<line class="ax" x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L - 6}" y="${y(v) + 4}" text-anchor="end">${v * 100}%</text>`).join('');
+  const xt = [];
+  for (let d = minDay; d <= maxDay; d++) xt.push(`<text x="${x(d)}" y="${H - B + 18}" text-anchor="middle">${d}</text>`);
+  const lines = sums.map(s => {
+    const pts = s.list.map(r => `${x(r.day).toFixed(1)},${y(r.share).toFixed(1)}`);
+    return `<polyline fill="none" stroke="${s.color}" stroke-width="3" points="${pts.join(' ')}"/>` +
+      s.list.map(r => `<circle cx="${x(r.day)}" cy="${y(r.share)}" r="3.5" fill="${s.color}"/>`).join('');
+  }).join('');
+  const empty = sums.length ? '' : `<text x="${W / 2}" y="${H / 2}" text-anchor="middle">실험 기록이 들어오면 여기에 선이 그려져요</text>`;
+  box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="계정별 주제 점유율 추이">${shade}${grid}${xt.join('')}${lines}${empty}<text x="${(L + W - R) / 2}" y="${H - 4}" text-anchor="middle" style="font-weight:700">일차</text></svg>`;
+  $('#expLegend').replaceChildren(...sums.map(s => h('span', { style: `--c:${s.color}` }, `${s.account} ${s.topic}`)));
+}
+
+// 예시: 계정 4개 + 대조군, 7일 주입 + 3일 회복
+function sampleExperiment() {
+  const plan = [['A', '다이어트', '하루 20분', [0.05, 0.2, 0.35, 0.5, 0.6, 0.7, 0.75, 0.8], [0.55, 0.3, 0.15]],
+    ['B', '주식·코인', '하루 20분', [0.0, 0.25, 0.45, 0.6, 0.7, 0.75, 0.85, 0.85], [0.7, 0.5, 0.35]],
+    ['C', '게임', '하루 10분', [0.1, 0.15, 0.25, 0.35, 0.45, 0.5, 0.55, 0.6], [0.35, 0.2, 0.1]],
+    ['D', '연애', '하루 40분', [0.05, 0.35, 0.6, 0.75, 0.85, 0.9, 0.9, 0.95], [0.85, 0.7, 0.55]],
+    ['대조군', '홈만 보기', '-', [0.05, 0.05, 0.1, 0.05, 0.1, 0.05, 0.1, 0.05], [0.05, 0.1, 0.05]]];
+  const rows = [];
+  for (const [acc, topic, dose, inj, rec] of plan) {
+    inj.forEach((v, d) => rows.push({ account: acc, topic, dose, day: d, phase: d === 0 ? '기준' : '주입', share: v }));
+    rec.forEach((v, i) => rows.push({ account: acc, topic, dose, day: inj.length + i, phase: '회복', share: v }));
+  }
+  return rows;
 }

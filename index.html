@@ -12,8 +12,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="style.css?v=20261019d">
-<script src="app.js?v=20261019d" defer></script>
+<link rel="stylesheet" href="style.css?v=20261019e">
+<script src="app.js?v=20261019e" defer></script>
 </head>
 <body>
 
@@ -153,6 +153,29 @@
           <summary>점수는 어떻게 계산하나요?</summary>
           <p><b>유효 채널 수</b> = e<sup>H</sup> (H = 채널별 시청 비율의 섀넌 엔트로피). 100편을 100개 채널에서 한 편씩 보면 100, 한 채널만 보면 1이에요.</p>
           <p><b>다양성 점수</b> = 채널 점수 60% + 주제 고르기 40%. 채널 점수는 유효 채널 수가 300곳이면 100점(로그 눈금), 주제 고르기는 주제 엔트로피 ÷ 최대 엔트로피예요.</p>
+        </details>
+      </div>
+
+      <div class="exp" id="experiment">
+        <h3 class="exp-h">🧪 우리 조 실험: 깨끗한 계정은 며칠 만에 물들까?</h3>
+        <p class="exp-lead">새 구글 계정마다 주제 하나만 골라 보고, 매일 홈 피드 상위 20개 중 그 주제 영상이 몇 개인지 셌어요. 그다음 회복 기간에는 반대 주제만 보거나 기록을 지우고, 원래 피드로 돌아오는 데 며칠 걸리는지 쟀어요.</p>
+        <p class="notice" id="expNote"></p>
+        <div class="kpis exp-kpis" id="expKpis" hidden></div>
+        <figure class="card">
+          <figcaption>계정별 주제 점유율 <small>(홈 피드 상위 20개 중 그 주제 영상 비율 · 회색 칸 = 회복 기간)</small></figcaption>
+          <div id="expChart" class="trend exp-chart"></div>
+          <div id="expLegend" class="exp-legend"></div>
+        </figure>
+        <details class="howto">
+          <summary>실험 규칙 (기획 초안 기준)</summary>
+          <ol>
+            <li>준비(0일차): 새 구글 계정 5개(각자 1개 + 대조군), 크롬 새 프로필. 시청 기록 켜기, 구독·좋아요 금지. 시작 전 홈 피드 캡처</li>
+            <li>계정마다 주제 하나: 예) 다이어트 · 주식·코인 · 게임 · 연애 · 대조군(홈에 뜨는 것만 봄)</li>
+            <li>주입 5~7일: 매일 같은 시간에 20분 — 주제 검색 영상 10개(각 2분 이상) + 쇼츠 30개. 주입량을 계정마다 다르게 해도 돼요</li>
+            <li>측정: 매일 보기 <b>전에</b> 홈 피드 상위 20개를 캡처하고 주제 관련 O/X 를 세요</li>
+            <li>회복 3일: 반대 주제만 보기 · 「관심 없음」 누르기 · 기록 삭제 중 하나</li>
+          </ol>
+          <p>기록은 사이트 폴더의 <code>experiment.csv</code> 에 한 줄씩 적어요: <code>계정,주제,주입량,일차,단계,관련영상,확인영상</code> (단계 = 기준/주입/회복). 결과는 「경향」이지 통계적 증명이 아니에요.</p>
         </details>
       </div>
     </div>
