@@ -105,6 +105,7 @@ function renderAll() {
   renderMap();
   renderMissions();
   renderReport();
+  renderConclusion();
 }
 const selected = () => DATA.apps.filter(a => state.apps.includes(a.id));
 
@@ -672,4 +673,21 @@ function sampleExperiment() {
     rec.forEach((v, i) => rows.push({ account: acc, topic, dose, day: inj.length + i, phase: '회복', share: v }));
   }
   return rows;
+}
+
+// ---------- ⑥ 결론: data.json 으로 권리 링크 상태를 센다 ----------
+function renderConclusion() {
+  const acts = DATA.apps.flatMap(a => Object.keys(DATA.actionTypes).map(k => ({ app: a, act: a.actions?.[k] || {} })));
+  const direct = acts.filter(x => x.act.url && x.act.url !== x.app.policy).length;
+  const policyOnly = acts.filter(x => x.act.url && x.act.url === x.app.policy).length;
+  const none = acts.filter(x => !x.act.url).length;
+  const total = acts.length;
+  const pct = n => Math.round(n / total * 100);
+  $('#conclStats').replaceChildren(
+    h('div', { class: 'cs ok' }, h('b', {}, direct), h('span', {}, `바로 가는 공식 페이지 있음 — 설정·도움말 (${pct(direct)}%)`)),
+    h('div', { class: 'cs mid' }, h('b', {}, policyOnly), h('span', {}, `처리방침 글로만 안내 (${pct(policyOnly)}%)`)),
+    h('div', { class: 'cs bad' }, h('b', {}, none), h('span', {}, `공식 방법을 못 찾음 (${pct(none)}%)`)));
+  $('#conclBar').replaceChildren(
+    h('i', { class: 'ok', style: `flex:${direct}` }), h('i', { class: 'mid', style: `flex:${policyOnly}` }), h('i', { class: 'bad', style: `flex:${none}` }));
+  $('#conclNote').textContent = `앱 ${DATA.apps.length}개 × 권리 ${Object.keys(DATA.actionTypes).length}개 = ${total}개 기준 · 앱을 몇 개 골랐든 전체 앱으로 셌어요 · ${DATA.meta.updated} 조사`;
 }

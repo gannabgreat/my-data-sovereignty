@@ -13,7 +13,12 @@
     "title": "내 데이터 주권 진단기",
     "team": "미래·지능·연결 조별 프로젝트",
     "updated": "2026-10-19",
-    "status": "2026-10-19 처리방침·기사 조사 반영(출처는 sources·policy)"
+    "status": "2026-10-19 처리방침·기사 조사 반영(출처는 sources·policy)",
+    "law": {
+      "name": "개인정보 보호법",
+      "url": "https://www.law.go.kr/법령/개인정보보호법",
+      "asOf": "2026. 9. 11. 시행본 기준(2026-10-19 확인)"
+    }
   },
   "dataTypes": {
     "behavior": {
@@ -41,22 +46,22 @@
     "download": {
       "label": "내 데이터 다운로드",
       "short": "열람",
-      "right": "열람권·전송요구권"
+      "right": "열람권(제35조)·전송요구권(제35조의2)"
     },
     "delete": {
       "label": "기록 삭제",
       "short": "삭제",
-      "right": "삭제권"
+      "right": "삭제권(제36조)"
     },
     "ads": {
       "label": "맞춤광고 끄기",
       "short": "광고",
-      "right": "처리정지권"
+      "right": "처리정지권(제37조)"
     },
     "thirdParty": {
       "label": "제3자 제공 철회",
       "short": "제3자",
-      "right": "동의 철회"
+      "right": "동의 철회권(제37조)"
     }
   },
   "apps": [
