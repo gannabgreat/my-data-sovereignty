@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="only light">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob:; form-action 'none'; base-uri 'none'">
+<title>조원 안내문 · 데이터 주권 진단기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="style.css?v=20261019g">
+</head>
+<body class="guide">
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker"><span class="pill">미래·지능·연결</span><span class="pill ghost">조원 안내문</span></p>
+    <h1>우리 조가 <span class="hl">할 일</span></h1>
+    <p class="lead">실험 하나, 조사 하나, 미션 하나. 이 페이지만 보고 따라 하면 돼요. 결과는 모두 <a class="on-dark" href="./">진단기 사이트</a>에 들어가요.</p>
+  </div>
+</header>
+
+<main class="wrap g-main">
+
+  <section class="g-sec">
+    <h2>📅 일정 <small>(제안 — 조에서 확정해요)</small></h2>
+    <ol class="timeline">
+      <li><b>10/20(화)</b> 역할·주제·주입량 정하기 → 실험용 구글 계정 만들기</li>
+      <li><b>10/21(수)</b> 0일차: 기준 캡처만 (아직 아무것도 안 봄)</li>
+      <li><b>10/22(목) ~ 10/26(월)</b> 주입 5일 (1~5일차) — 10/26 중간고사 날에도 20분만</li>
+      <li><b>10/27(화) ~ 10/29(목)</b> 회복 3일 (6~8일차)</li>
+      <li><b>10/30(금)</b> 기록·캡처·미션 결과 제출 마감</li>
+      <li><b>11/2(월)</b> 9주차 첫 팀프로젝트 발표</li>
+    </ol>
+    <p class="fine">기획 초안은 주입 5~7일이었어요. 11/2 발표에 맞추려고 5일로 잡았어요.</p>
+  </section>
+
+  <section class="g-sec">
+    <h2>👥 역할 정하기</h2>
+    <table class="g-table">
+      <thead><tr><th>정할 것</th><th>예시</th><th>담당</th></tr></thead>
+      <tbody>
+        <tr><td>실험 계정 주제 (1인 1계정)</td><td>다이어트 · 주식·코인 · 게임 · 연애</td><td>각자</td></tr>
+        <tr><td>대조군 계정 (주제 없이 홈만 봄)</td><td>한 명이 계정 하나 더</td><td>?</td></tr>
+        <tr><td>주입량 (계정마다 다르게)</td><td>하루 10분 / 20분 / 40분</td><td>각자</td></tr>
+        <tr><td>회복 방법 (계정마다 다르게)</td><td>반대 주제만 보기 / 「관심 없음」 누르기 / 시청 기록 삭제</td><td>각자</td></tr>
+        <tr><td>데이터 종류 담당 (발표 1장씩)</td><td>🎬행동 · 📍위치 · 💳결제 · 🧬생체</td><td>각자</td></tr>
+        <tr><td>기록 모으는 사람</td><td>공유 시트·드라이브 폴더 만들기</td><td>?</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="g-sec">
+    <h2>🧪 할 일 1 · 알고리즘 실험 <small>(하루 약 25분)</small></h2>
+
+    <h3>준비물</h3>
+    <ul class="check">
+      <li>실험 전용 <b>새 구글 계정</b> 1개 — 평소 쓰는 계정과 섞이지 않는 새 계정이면 돼요. 전화번호 인증을 요구할 수 있어요</li>
+      <li><b>크롬 새 프로필</b>(오른쪽 위 프로필 › 추가) — 평소 계정·쿠키와 섞이지 않게. 폰보다 PC가 캡처·셈이 쉬워요</li>
+      <li>캡처 도구 (맥: ⌘+⇧+4 / 윈도우: Win+⇧+S)</li>
+      <li>기록표 (아래 형식, 구글 시트 추천)</li>
+    </ul>
+
+    <h3>0일차 (10/21) — 기준 재기</h3>
+    <ol class="steps-list">
+      <li>새 프로필로 새 계정 로그인 → <a href="https://myactivity.google.com/product/youtube" target="_blank" rel="noopener noreferrer">내 활동 › YouTube 기록</a>이 <b>켜짐</b>인지 확인</li>
+      <li>youtube.com 홈을 열고, <b>아무것도 누르지 않은 채</b> 상위 20개를 캡처</li>
+      <li>그중 내 주제 영상이 몇 개인지 세서 기록 (단계 = <code>기준</code>)</li>
+    </ol>
+
+    <h3>1~5일차 — 주입 (매일 같은 시간대)</h3>
+    <ol class="steps-list">
+      <li><b>먼저 측정</b>: 홈 새로고침 → 상위 20개 캡처 → 내 주제 영상 수 기록 (단계 = <code>주입</code>)</li>
+      <li><b>그다음 주입</b>: 주제를 검색해서 영상 10개 (각 2분 이상) + 쇼츠 30개. 주입량을 다르게 정했으면 그 시간만큼</li>
+      <li class="warn">구독 · 좋아요 · 댓글 · 공유 <b>금지</b> — 시청만으로 얼마나 물드는지 보는 실험이에요</li>
+    </ol>
+
+    <h3>6~8일차 — 회복</h3>
+    <ol class="steps-list">
+      <li><b>먼저 측정</b> (주입 때와 똑같이, 단계 = <code>회복</code>)</li>
+      <li>정한 회복 방법만 하기: 반대 주제만 보기 / 내 주제 영상에 「관심 없음」 / 시청 기록 삭제</li>
+    </ol>
+
+    <h3>세는 규칙 (모두 똑같이)</h3>
+    <ul class="check">
+      <li>「상위 20개」 = 홈 맨 위부터 <b>일반 영상 카드 20개</b>. 광고·쇼츠 줄·「뉴스 속보」 같은 묶음 칸은 빼고 세요</li>
+      <li>내 주제인지는 <b>제목·썸네일·채널 이름</b>으로 판단. 애매하면 X</li>
+      <li>대조군은 「가장 많이 보이는 주제 하나」를 0일차에 정해 두고 그걸로 세요</li>
+      <li>결과는 「경향」이지 통계적 증명이 아니에요 — 발표에서도 그렇게 말해요</li>
+    </ul>
+
+    <h3>기록 형식</h3>
+    <p>시트 첫 줄을 이렇게 만들고 하루 한 줄씩 적어 주세요. 그대로 사이트 그래프에 들어가요.</p>
+    <table class="g-table mono">
+      <thead><tr><th>계정</th><th>주제</th><th>주입량</th><th>일차</th><th>단계</th><th>관련영상</th><th>확인영상</th></tr></thead>
+      <tbody>
+        <tr><td>A</td><td>다이어트</td><td>20분</td><td>0</td><td>기준</td><td>1</td><td>20</td></tr>
+        <tr><td>A</td><td>다이어트</td><td>20분</td><td>1</td><td>주입</td><td>4</td><td>20</td></tr>
+        <tr><td>A</td><td>다이어트</td><td>20분</td><td>6</td><td>회복</td><td>11</td><td>20</td></tr>
+        <tr><td>대조군</td><td>홈만 보기</td><td>-</td><td>0</td><td>기준</td><td>2</td><td>20</td></tr>
+      </tbody>
+    </table>
+    <p class="fine">위 숫자는 예시예요. <a href="experiment.csv" download>빈 기록표(CSV) 받기</a></p>
+
+    <h3>캡처 저장</h3>
+    <p>파일 이름 <code>계정_일차_날짜.png</code> (예: <code>A_3_1024.png</code>) — 공유 폴더에 모아 주세요. 발표 때 「0일차 vs 5일차」 비교 사진으로 써요.</p>
+  </section>
+
+  <section class="g-sec">
+    <h2>🔑 할 일 2 · 선택권 되찾기 미션 <small>(30분, 언제든)</small></h2>
+    <ol class="steps-list">
+      <li><a href="./#s3">진단기 ③ 미션</a>에서 <b>내가 실제로 쓰는 앱</b> 미션 2~3개를 직접 해 보기 (본인 계정)</li>
+      <li>몇 번 눌러서 끝났는지 세기 — 화면 하나 넘어갈 때마다 1번</li>
+      <li>성공했는지, 막힌 곳은 어디였는지 한 줄 메모 + 마지막 화면 캡처</li>
+    </ol>
+    <p>이 숫자가 결론 「권리는 있는데, 버튼이 없다」의 실제 증거가 돼요. 지금은 링크가 있는지만 셌거든요.</p>
+    <table class="g-table mono">
+      <thead><tr><th>이름</th><th>앱</th><th>권리</th><th>클릭 수</th><th>성공</th><th>메모</th></tr></thead>
+      <tbody><tr><td>(예시) 홍길동</td><td>유튜브</td><td>기록 삭제</td><td>6</td><td>O</td><td>어디서 막혔는지 한 줄</td></tr></tbody>
+    </table>
+    <p class="warn-box">⚠ 「계정 삭제」·「회원 탈퇴」는 되돌릴 수 없어요. 미션은 <b>다운로드·기록 삭제·광고 끄기·연결 해제</b>까지만 해 보고, 탈퇴는 하지 마세요. 기록 삭제도 되돌릴 수 없으니 지워도 되는 기록만(예: 최근 1시간) 지워 보세요.</p>
+  </section>
+
+  <section class="g-sec">
+    <h2>📚 할 일 3 · 내 데이터 종류 조사 <small>(발표 1장)</small></h2>
+    <p>교수님 말: 각자 관심사를 희생시키지 말 것. 그래서 데이터 종류마다 한 명이 자기 관심사로 이야기를 맡아요.</p>
+    <div class="g-cards">
+      <div class="card"><b>📍 위치</b><p>도시 감시 — CCTV·교통카드·따릉이·지도앱. 하루 동안 위치가 몇 군데에 남는지</p></div>
+      <div class="card"><b>🎬 행동</b><p>알고리즘과 선택의 자유 — 실험 결과를 이 장에서 보여 주기</p></div>
+      <div class="card"><b>💳 결제</b><p>무신사 랭킹·패션 획일화 — 구매 기록이 추천을 어떻게 만드나</p></div>
+      <div class="card"><b>🧬 생체</b><p>얼굴·지문, 고인 AI — 동의하지 않은 데이터를 써도 되나</p></div>
+    </div>
+    <h3>한 장에 들어갈 것</h3>
+    <ul class="check">
+      <li>어떤 앱이 이 데이터를 모으나 — <a href="./#s2">진단기 ② 노출 지도</a>에서 가져오기</li>
+      <li>실제 사례 1개 + <b>기사 링크</b> (사이트에 이미 16건 있어요. 새로 찾으면 기사 주소 꼭)</li>
+      <li>직접 해 본 미션 1개 (할 일 2의 결과)</li>
+      <li>내 관심사 한 줄: 「그래서 나는 ○○가 문제라고 생각한다」</li>
+      <li>강의 연결 (선택): 2주차 가치 정렬 · 3주차 생체정보·생각 감시 · 4주차 「생명의 핵심은 정보」 · 6주차 디지털 인간</li>
+    </ul>
+  </section>
+
+  <section class="g-sec">
+    <h2>📮 10/30(금)까지 낼 것</h2>
+    <table class="g-table">
+      <thead><tr><th>무엇</th><th>형식</th><th>어디로</th></tr></thead>
+      <tbody>
+        <tr><td>실험 기록 (0~8일차 9줄)</td><td>시트 또는 CSV</td><td rowspan="4">공유 폴더 (기록 모으는 사람이 만들기)</td></tr>
+        <tr><td>홈 캡처 (최소 0·5·8일차)</td><td>PNG, 파일 이름 규칙대로</td></tr>
+        <tr><td>미션 결과 2~3개</td><td>위 표 + 마지막 화면 캡처</td></tr>
+        <tr><td>데이터 종류 1장 재료</td><td>사례 기사 링크 + 한 줄 주장</td></tr>
+      </tbody>
+    </table>
+    <p class="fine">모이면 사이트 그래프·결론 숫자에 넣고 다시 올려요. 실험 계정은 실험이 끝난 뒤 지워도 돼요.</p>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p><a href="./">← 데이터 주권 진단기로</a></p>
+  </div>
+</footer>
+</body>
+</html>
