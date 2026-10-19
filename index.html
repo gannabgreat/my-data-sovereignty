@@ -12,8 +12,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="style.css?v=20261019h">
-<script src="app.js?v=20261019h" defer></script>
+<link rel="stylesheet" href="style.css?v=20261019i">
+<script src="app.js?v=20261019i" defer></script>
 </head>
 <body>
 
@@ -22,6 +22,7 @@
     <p class="kicker"><span class="pill">미래·지능·연결</span><span class="pill ghost">조별 프로젝트</span></p>
     <h1>내 데이터,<br><span class="hl">내 것인가?</span></h1>
     <p class="lead">내가 쓰는 앱이 무엇을 가져가는지 보고, <b>선택권</b>을 직접 되찾고, 내 알고리즘이 얼마나 <b>다양한지</b> 진단해 <b>데이터 주권 성적표</b>를 받아 보세요.</p>
+    <p class="define"><b>데이터 주권</b> = 내 데이터를 누가 가져가고 어떻게 쓸지 <u>내가 정할</u> 권리.<br>알고리즘이 나를 <b>결정</b>하는가, 내가 <b>선택</b>하는가?</p>
     <div class="privacy" role="note">
       <span class="lock" aria-hidden="true">🔒</span>
       <div>
@@ -154,6 +155,7 @@
           <summary>점수는 어떻게 계산하나요?</summary>
           <p><b>유효 채널 수</b> = e<sup>H</sup> (H = 채널별 시청 비율의 섀넌 엔트로피). 100편을 100개 채널에서 한 편씩 보면 100, 한 채널만 보면 1이에요.</p>
           <p><b>다양성 점수</b> = 채널 점수 60% + 주제 고르기 40%. 채널 점수는 유효 채널 수가 300곳이면 100점(로그 눈금), 주제 고르기는 주제 엔트로피 ÷ 최대 엔트로피예요.</p>
+          <p><b>한계</b> — 채널과 주제 키워드 수만 세요. 채널이 달라도 분위기·형식이 다 비슷한 「다른 듯 같은」 획일화(예: 매번 다른 곡인데 다 비슷하게 들리는 AI 음악)는 이 점수로 못 잡아요.</p>
         </details>
       </div>
 
@@ -259,6 +261,7 @@
               <dt>지금 현실</dt><dd>피드가 얼마나 빨리 좁아지는지 우리 실험이 재요(④). 앱마다 추천을 끄는 메뉴가 있는지는 조원 조사 거리예요.</dd>
               <dt>지금 법</dt><dd><a href="https://www.law.go.kr/법령/개인정보보호법" target="_blank" rel="noopener noreferrer">개인정보 보호법 제37조의2</a>: 완전히 자동화된 결정을 거부·설명 요구할 수 있지만, 「권리 또는 의무에 중대한 영향」이 있을 때만이에요. 피드 추천이 여기 들어가는지는 분명하지 않아요.</dd>
               <dt>해외</dt><dd>EU <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022R2065" target="_blank" rel="noopener noreferrer">디지털서비스법(DSA) 제38조</a>: 초대형 플랫폼은 추천 시스템마다 <b>프로파일링에 기반하지 않은 선택지</b>를 하나 이상 줘야 해요. 제27조는 추천의 주요 기준을 쉬운 말로 공개하게 해요.</dd>
+              <dt>사례</dt><dd><a href="https://byline.network/2021/04/29-101" target="_blank" rel="noopener noreferrer">이루다 (2021)</a>: 연애 상담 앱에서 모은 카톡 대화(이용자 약 60만 명, 94억여 문장)를 AI 챗봇 학습에 써서 개인정보위가 1억 330만 원을 부과했어요. 「신규 서비스 개발」 동의로는 볼 수 없다고 봤어요. 내 데이터가 <b>AI 학습에 쓰일지도 내가 정해야</b> 해요.</dd>
               <dt>제안</dt><dd><b>대형 플랫폼에 「비개인화 피드」 스위치 의무화</b> + 「이 영상이 왜 추천됐나」 설명 공개.</dd>
             </dl>
           </article>
@@ -295,7 +298,7 @@
 <dialog id="detox" class="sheet">
   <form method="dialog">
     <header><h3>🌱 7일 디지털 디톡스 챌린지</h3><button class="x" aria-label="닫기">✕</button></header>
-    <p>하루 하나씩. 알고리즘이 고른 것 말고, <b>내가 고른 것</b>으로 하루를 채워 보는 연습이에요.</p>
+    <p>하루 하나씩. 알고리즘이 고른 것 말고, <b>내가 고른 것</b>으로 하루를 채워 보는 연습이에요. 선택하는 힘도 써야 늘어요 — 디톡스는 <b>결정되는 나</b>에서 <b>선택하는 나</b>로 돌아가는 훈련이에요.</p>
     <ol id="detoxList" class="detox"></ol>
     <p class="fine" id="detoxCount"></p>
   </form>
