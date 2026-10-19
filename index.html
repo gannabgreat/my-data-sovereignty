@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="only light">
+<!-- 이 사이트는 데이터를 밖으로 보내지 않는다: 스크립트는 같은 출처만, fetch/XHR 도 같은 출처(data.json)만 허용 -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob:; form-action 'none'; base-uri 'none'">
+<title>내 데이터 주권 진단기</title>
+<meta name="description" content="내가 쓰는 앱이 무엇을 가져가는지 보고, 선택권을 되찾고, 내 알고리즘의 다양성을 진단하는 데이터 주권 성적표">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="style.css?v=20261019d">
+<script src="app.js?v=20261019d" defer></script>
+</head>
+<body>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <p class="kicker"><span class="pill">미래·지능·연결</span><span class="pill ghost">조별 프로젝트</span></p>
+    <h1>내 데이터,<br><span class="hl">내 것인가?</span></h1>
+    <p class="lead">내가 쓰는 앱이 무엇을 가져가는지 보고, <b>선택권</b>을 직접 되찾고, 내 알고리즘이 얼마나 <b>다양한지</b> 진단해 <b>데이터 주권 성적표</b>를 받아 보세요.</p>
+    <div class="privacy" role="note">
+      <span class="lock" aria-hidden="true">🔒</span>
+      <div>
+        <b>이 사이트는 아무것도 수집하지 않아요.</b>
+        <span>체크한 내용과 올린 파일은 모두 <u>내 브라우저 안에서만</u> 계산돼요. 서버가 없고, 브라우저 보안 정책(CSP)으로 외부 전송을 막아 두었어요.</span>
+      </div>
+    </div>
+    <a class="btn primary big" href="#s1">진단 시작하기 ↓</a>
+    <div class="orb o1" aria-hidden="true"></div><div class="orb o2 y" aria-hidden="true"></div>
+  </div>
+</header>
+
+<nav class="steps" aria-label="진단 단계">
+  <div class="wrap">
+    <a href="#s1" data-step="1"><i>1</i><span>앱 고르기</span></a>
+    <a href="#s2" data-step="2"><i>2</i><span>노출 지도</span></a>
+    <a href="#s3" data-step="3"><i>3</i><span>되찾기 미션</span></a>
+    <a href="#s4" data-step="4"><i>4</i><span>다양성 진단</span></a>
+    <a href="#s5" data-step="5"><i>5</i><span>성적표</span></a>
+  </div>
+</nav>
+
+<main>
+  <div id="loadError" class="wrap notice danger" hidden></div>
+
+  <!-- ① 앱 체크 -->
+  <section id="s1" class="step reveal">
+    <div class="wrap">
+      <header class="sh">
+        <span class="no">01</span>
+        <div><h2 data-memo="솔직하게!">내가 쓰는 앱 고르기</h2><p>요즘 일주일에 한 번 이상 여는 앱을 모두 눌러 주세요.</p></div>
+      </header>
+      <div id="appGrid" class="app-grid" role="group" aria-label="사용하는 앱"></div>
+      <p class="count"><b id="appCount">0</b>개 골랐어요 <button type="button" class="link" id="selectAll">모두 선택</button></p>
+    </div>
+  </section>
+
+  <!-- ② 노출 지도 -->
+  <section id="s2" class="step reveal">
+    <div class="wrap">
+      <header class="sh">
+        <span class="no">02</span>
+        <div><h2 data-memo="생각보다 많지?">내 데이터 노출 지도</h2><p>고른 앱들이 어떤 종류의 데이터를 모으는지, 몇 곳에 넘기는지 한눈에.</p></div>
+      </header>
+      <div id="typeSummary" class="type-summary"></div>
+      <div class="empty" id="mapEmpty">① 에서 앱을 먼저 골라 주세요.</div>
+      <div class="table-wrap"><table id="exposureMap" class="xmap" hidden>
+        <thead></thead><tbody></tbody>
+      </table></div>
+      <p class="legend"><span>● 모음</span><span class="off">○ 안 모음</span><span class="unk">? 확인 안 됨(처리방침에 명시 없음)</span><span>근거: 각 앱 개인정보처리방침(2026-10-19 열람)·언론 보도. 「제3자 제공」 숫자는 처리방침 표 기준이고 처리위탁은 빼고 셌어요.</span></p>
+    </div>
+  </section>
+
+  <!-- ③ 선택권 되찾기 미션 -->
+  <section id="s3" class="step reveal">
+    <div class="wrap">
+      <header class="sh">
+        <span class="no">03</span>
+        <div><h2 data-memo="직접 눌러 보기">선택권 되찾기 미션</h2><p>법이 보장한 권리(열람·삭제·처리정지·동의 철회)를 실제로 써 보세요. 해 보고 체크하면 점수가 올라가요. <b>몇 번 클릭했는지</b>도 적어 주세요 — 권리를 쓰기가 얼마나 어려운지 보여 주는 증거가 돼요.</p></div>
+      </header>
+      <div class="mission-bar">
+        <div class="meter" aria-hidden="true"><span id="missionFill"></span></div>
+        <p><b id="missionDone">0</b> / <span id="missionTotal">0</span> 완료 · 미션 점수 <b id="missionScore">0</b>점</p>
+      </div>
+      <div class="adtip">
+        <b>💡 앱 안에 「맞춤광고 끄기」 버튼이 없는 곳이 많아요</b>
+        쿠팡·무신사 등은 처리방침에서 <u>휴대폰 설정</u>으로 막으라고 안내해요. 한 번 바꾸면 모든 앱에 적용돼요.
+        <ul>
+          <li>iPhone: 설정 › 개인정보 보호 및 보안 › 추적 › 「앱이 추적을 요청하도록 허용」 끄기</li>
+          <li>안드로이드: 설정 › 보안 및 개인정보 보호 › 기타 개인정보 설정 › 광고 › 광고 ID 삭제 (기종마다 메뉴 이름이 조금 달라요)</li>
+        </ul>
+        <span class="fine">「방침 보기 ↗」 버튼은 바로 가는 설정 화면이 없어서 처리방침의 해당 조항으로 연결되는 거예요.</span>
+      </div>
+      <div class="empty" id="missionEmpty">① 에서 앱을 먼저 골라 주세요.</div>
+      <div id="missions" class="missions"></div>
+    </div>
+  </section>
+
+  <!-- ④ 다양성 진단 -->
+  <section id="s4" class="step reveal">
+    <div class="wrap">
+      <header class="sh">
+        <span class="no">04</span>
+        <div><h2 data-memo="내 취향일까, 알고리즘 취향일까">내 알고리즘, 얼마나 다양할까?</h2><p>유튜브 시청 기록을 올리면 <b>브라우저 안에서만</b> 분석해 채널·주제 쏠림과 다양성 점수를 보여 줘요. 파일은 어디에도 올라가지 않아요.</p></div>
+      </header>
+
+      <details class="howto">
+        <summary>시청 기록 파일 받는 법 (구글 테이크아웃, 5분)</summary>
+        <ol>
+          <li><a href="https://takeout.google.com" target="_blank" rel="noopener noreferrer">takeout.google.com</a> 접속 → <b>「선택 모두 해제」</b></li>
+          <li>목록 아래쪽 <b>「YouTube 및 YouTube Music」</b>만 체크</li>
+          <li><b>「여러 형식」</b>에서 기록을 <b>JSON</b> 으로 바꾸기 (HTML 도 읽을 수 있어요)</li>
+          <li><b>「포함된 모든 YouTube 데이터」</b> → <b>기록</b>만 남기기 → 내보내기</li>
+          <li>메일로 온 압축 파일을 풀고 <code>기록/watch-history.json</code> 을 아래에 올리기</li>
+        </ol>
+      </details>
+
+      <label class="drop" id="drop">
+        <input type="file" id="historyFile" accept=".json,.html,application/json,text/html">
+        <span class="big">📂 watch-history.json 끌어다 놓기</span>
+        <span>또는 눌러서 파일 고르기 · JSON/HTML</span>
+      </label>
+      <p class="center"><button type="button" class="btn ghost" id="sampleBtn">파일이 없다면 — 예시 데이터로 체험하기</button></p>
+
+      <div id="divResult" class="div-result" hidden>
+        <p class="notice" id="divNote"></p>
+        <div class="kpis">
+          <div class="kpi main"><span>다양성 점수</span><b id="divScore">0</b><small>/ 100</small></div>
+          <div class="kpi"><span>본 영상</span><b id="kVideos">0</b><small>편</small></div>
+          <div class="kpi"><span>본 채널</span><b id="kChannels">0</b><small>곳</small></div>
+          <div class="kpi"><span>유효 채널 수</span><b id="kEffective">0</b><small>곳</small></div>
+          <div class="kpi"><span>상위 10개 채널 비중</span><b id="kTop10">0</b><small>%</small></div>
+        </div>
+        <div class="grid2">
+          <figure class="card">
+            <figcaption>많이 본 채널 TOP 10</figcaption>
+            <ol id="topChannels" class="bars"></ol>
+          </figure>
+          <figure class="card">
+            <figcaption>주제 쏠림 <small>(제목 단어로 대략 분류)</small></figcaption>
+            <ol id="topicBars" class="bars"></ol>
+          </figure>
+        </div>
+        <figure class="card">
+          <figcaption>달마다 본 채널의 다양성 <small>(유효 채널 수 — 낮아질수록 쏠림)</small></figcaption>
+          <div id="trend" class="trend"></div>
+        </figure>
+        <details class="howto">
+          <summary>점수는 어떻게 계산하나요?</summary>
+          <p><b>유효 채널 수</b> = e<sup>H</sup> (H = 채널별 시청 비율의 섀넌 엔트로피). 100편을 100개 채널에서 한 편씩 보면 100, 한 채널만 보면 1이에요.</p>
+          <p><b>다양성 점수</b> = 채널 점수 60% + 주제 고르기 40%. 채널 점수는 유효 채널 수가 300곳이면 100점(로그 눈금), 주제 고르기는 주제 엔트로피 ÷ 최대 엔트로피예요.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑤ 성적표 -->
+  <section id="s5" class="step reveal">
+    <div class="wrap">
+      <header class="sh">
+        <span class="no">05</span>
+        <div><h2 data-memo="두근두근">데이터 주권 성적표</h2><p>되찾은 선택권 · 알고리즘 다양성 · 데이터 노출을 합쳐 매긴 점수예요.</p></div>
+      </header>
+      <div class="report">
+        <div class="grade-card">
+          <span class="lbl">나의 데이터 주권</span>
+          <b id="grade" class="grade">–</b>
+          <span class="total"><b id="totalScore">0</b>점</span>
+          <p id="gradeMsg" class="msg"></p>
+        </div>
+        <div class="breakdown">
+          <div class="row"><span>🔑 되찾은 선택권</span><div class="meter"><span id="bMission"></span></div><b id="bMissionV">0</b></div>
+          <div class="row"><span>🌈 알고리즘 다양성</span><div class="meter"><span id="bDiv"></span></div><b id="bDivV">–</b></div>
+          <div class="row"><span>🛡️ 데이터 노출 방어</span><div class="meter"><span id="bExpo"></span></div><b id="bExpoV">0</b></div>
+          <p class="fine" id="weightNote"></p>
+          <p class="fine" id="clickStat"></p>
+        </div>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn primary" id="cardBtn">📸 공유용 카드 저장</button>
+        <button type="button" class="btn yellow" id="detoxBtn">🌱 디지털 디톡스 챌린지</button>
+      </div>
+      <canvas id="shareCanvas" width="1080" height="1350" hidden></canvas>
+    </div>
+  </section>
+</main>
+
+<dialog id="detox" class="sheet">
+  <form method="dialog">
+    <header><h3>🌱 7일 디지털 디톡스 챌린지</h3><button class="x" aria-label="닫기">✕</button></header>
+    <p>하루 하나씩. 알고리즘이 고른 것 말고, <b>내가 고른 것</b>으로 하루를 채워 보는 연습이에요.</p>
+    <ol id="detoxList" class="detox"></ol>
+    <p class="fine" id="detoxCount"></p>
+  </form>
+</dialog>
+
+<footer class="foot">
+  <div class="wrap">
+    <p><b>개인정보 처리 안내</b> — 이 사이트는 서버가 없는 정적 페이지예요. 고른 앱·미션 체크는 이 브라우저의 저장소(localStorage)에만 남고, 시청 기록 파일은 저장하지 않아요. 글꼴 파일만 Google Fonts·jsDelivr 에서 내려받아요.</p>
+    <p><button type="button" class="link" id="resetBtn">내 기록 모두 지우기</button> · <span id="dataStatus"></span></p>
+    <p class="fine">근거: 개인정보 보호법 정보주체의 권리(열람·정정·삭제·처리정지·전송요구). 앱별 수집 항목·사례는 조원이 조사 중이에요.</p>
+  </div>
+</footer>
+</body>
+</html>

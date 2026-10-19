@@ -1,0 +1,708 @@
+{
+  "_안내": [
+    "조원이 채우는 파일입니다. 사이트 코드는 건드리지 않고 이 파일만 고치면 화면이 바뀝니다.",
+    "collects 의 값: true = 모은다, false = 안 모은다, null = 아직 모름(화면에 ? 로 표시).",
+    "incidents: 유출·오용 사례. 기사로 확인했으면 verified 를 true 로, url 에 기사 주소.",
+    "actions: 「선택권 되찾기」 링크. 직접 들어가 확인했으면 verified 를 true 로. 모르면 url 을 null 로 두면 「링크 조사 필요」로 표시돼요.",
+    "researched: 이 앱을 다 조사했으면 true. false 면 카드에 「조사 필요 · 예시값」 도장이 찍혀요.",
+    "sources: 조사 근거(처리방침 주소, 기사 주소)를 자유롭게 적는 칸.",
+    "thirdPartyCount: 점수 계산용 숫자(하한). thirdPartyLabel: 화면에 보이는 글(예: '3곳 이상', '92건'). thirdPartyNote: 어떻게 셌는지.",
+    "policy: 근거로 쓴 개인정보처리방침 주소. collectsNote: 수집 항목 판단 메모."
+  ],
+  "meta": {
+    "title": "내 데이터 주권 진단기",
+    "team": "미래·지능·연결 조별 프로젝트",
+    "updated": "2026-10-19",
+    "status": "2026-10-19 처리방침·기사 조사 반영(출처는 sources·policy)"
+  },
+  "dataTypes": {
+    "behavior": {
+      "icon": "🎬",
+      "label": "행동",
+      "desc": "시청·검색·클릭 기록"
+    },
+    "location": {
+      "icon": "📍",
+      "label": "위치",
+      "desc": "GPS·이동 경로·교통 이용"
+    },
+    "payment": {
+      "icon": "💳",
+      "label": "결제",
+      "desc": "구매·송금·카드 내역"
+    },
+    "biometric": {
+      "icon": "🧬",
+      "label": "생체",
+      "desc": "얼굴·지문·음성"
+    }
+  },
+  "actionTypes": {
+    "download": {
+      "label": "내 데이터 다운로드",
+      "short": "열람",
+      "right": "열람권·전송요구권"
+    },
+    "delete": {
+      "label": "기록 삭제",
+      "short": "삭제",
+      "right": "삭제권"
+    },
+    "ads": {
+      "label": "맞춤광고 끄기",
+      "short": "광고",
+      "right": "처리정지권"
+    },
+    "thirdParty": {
+      "label": "제3자 제공 철회",
+      "short": "제3자",
+      "right": "동의 철회"
+    }
+  },
+  "apps": [
+    {
+      "id": "youtube",
+      "name": "유튜브",
+      "company": "Google",
+      "emoji": "▶️",
+      "researched": true,
+      "collects": {
+        "behavior": true,
+        "location": true,
+        "payment": true,
+        "biometric": null
+      },
+      "thirdPartyCount": 3,
+      "incidents": [
+        {
+          "title": "개인정보위 과징금 692억원(동의 없는 행태정보 수집)",
+          "year": 2022,
+          "url": "https://www.ajunews.com/view/20220914131004945",
+          "verified": true
+        }
+      ],
+      "actions": {
+        "download": {
+          "url": "https://takeout.google.com",
+          "verified": true,
+          "note": "구글 테이크아웃 › YouTube만 골라 받기"
+        },
+        "delete": {
+          "url": "https://myactivity.google.com/product/youtube",
+          "verified": true,
+          "note": "내 활동 › YouTube 기록 삭제·자동 삭제"
+        },
+        "ads": {
+          "url": "https://myadcenter.google.com",
+          "verified": true,
+          "note": "내 광고 센터 › 개인 맞춤 광고 사용 안함"
+        },
+        "thirdParty": {
+          "url": "https://myaccount.google.com/connections",
+          "verified": true,
+          "note": "서드 파티 연결 › 앱 선택 › 연결 해제"
+        }
+      },
+      "sources": [
+        "https://policies.google.com/privacy?hl=ko",
+        "https://policies.google.com/privacy/additional?hl=ko",
+        "https://support.google.com/accounts/answer/3024190?hl=ko",
+        "https://support.google.com/youtube/answer/95725?hl=ko",
+        "https://support.google.com/My-Ad-Center-Help/answer/12155451?hl=ko",
+        "https://support.google.com/accounts/answer/13533235?hl=ko",
+        "https://www.ajunews.com/view/20220914131004945",
+        "https://mobile.newsis.com/view/NISX20220914_0002012372"
+      ],
+      "policy": "https://policies.google.com/privacy?hl=ko",
+      "collectsNote": "",
+      "thirdPartyLabel": "3곳 이상",
+      "thirdPartyNote": "통신 3사(과금) + 「Google Play 앱 개발자들」(범주라 셀 수 없음)"
+    },
+    {
+      "id": "kakao",
+      "name": "카카오톡",
+      "company": "카카오",
+      "emoji": "💬",
+      "researched": true,
+      "collects": {
+        "behavior": true,
+        "location": true,
+        "payment": true,
+        "biometric": null
+      },
+      "thirdPartyCount": 35,
+      "incidents": [
+        {
+          "title": "오픈채팅 유출, 과징금 151억원",
+          "year": 2024,
+          "url": "https://m.seoul.co.kr/news/2024/05/24/20240524011006",
+          "verified": true
+        },
+        {
+          "title": "카카오페이, 4천만명 정보 알리페이 이전 과징금 59.7억원",
+          "year": 2025,
+          "url": "https://news.mtn.co.kr/news-detail/2025012315132112714",
+          "verified": true
+        }
+      ],
+      "actions": {
+        "download": {
+          "url": "https://accounts.kakao.com/weblogin/account/info",
+          "verified": true,
+          "note": "카카오계정 › 계정 정보 열람(처리방침 7항)"
+        },
+        "delete": {
+          "url": null,
+          "verified": false,
+          "note": "기록 일괄 삭제 공식 페이지 못 찾음 — 탈퇴로만 확인"
+        },
+        "ads": {
+          "url": "https://info.ds.kakao.com/optout.do",
+          "verified": true,
+          "note": "Kakao 맞춤형 광고 › 허용 안 함"
+        },
+        "thirdParty": {
+          "url": "https://accounts.kakao.com/weblogin/account/partner",
+          "verified": true,
+          "note": "카카오계정 › 연결된 서비스 관리 › 동의 철회"
+        }
+      },
+      "sources": [
+        "https://www.kakao.com/policy/privacy",
+        "https://www.kakao.com/policy/privacyPolicy/informationThirdParty?lang=ko",
+        "https://kakaocorp.com/policy/privacyPolicy/corporateSitePrivacyPolicy",
+        "https://cs.kakao.com/helps_html/1073209354?locale=ko",
+        "https://cs.kakao.com/helps_html/1073203140?locale=ko",
+        "https://devtalk.kakao.com/t/about-manage-connected-services/79279",
+        "https://m.seoul.co.kr/news/2024/05/24/20240524011006",
+        "https://www.heraldk.com/article/2026011504120806629",
+        "https://www.newsseoul.co.kr/news/view/1065589220887880"
+      ],
+      "policy": "https://www.kakao.com/policy/privacy",
+      "collectsNote": "",
+      "thirdPartyLabel": "35곳 이상",
+      "thirdPartyNote": "이름이 적힌 업체 약 35곳 + 판매점·제휴사 등 범주 행 17개"
+    },
+    {
+      "id": "naver",
+      "name": "네이버",
+      "company": "네이버",
+      "emoji": "🟩",
+      "researched": true,
+      "collects": {
+        "behavior": true,
+        "location": true,
+        "payment": true,
+        "biometric": true
+      },
+      "thirdPartyCount": 92,
+      "incidents": [
+        {
+          "title": "애드포스트 메일 오류로 약 2,200명 주민번호 등 유출",
+          "year": 2019,
+          "url": "https://www.inews24.com/view/1175611",
+          "verified": true
+        }
+      ],
+      "actions": {
+        "download": {
+          "url": "https://nid.naver.com/user2/help/myInfoV2?lang=ko_KR",
+          "verified": true,
+          "note": "네이버ID › 내정보 · 개인정보 이용현황"
+        },
+        "delete": {
+          "url": null,
+          "verified": false,
+          "note": "검색·방문기록 삭제 공식 도움말 못 찾음"
+        },
+        "ads": {
+          "url": "https://gam.naver.com/optout/main",
+          "verified": true,
+          "note": "네이버 맞춤형 광고 설정 › 차단"
+        },
+        "thirdParty": {
+          "url": "https://nid.naver.com/internalToken/view/tokenList/pc/ko",
+          "verified": true,
+          "note": "네이버 로그인 연결 서비스 관리 › 철회"
+        }
+      },
+      "sources": [
+        "https://policy.naver.com/policy/privacy.html",
+        "https://notice.naver.com/api/v1/services/privacypolicy/contents/key/popup01",
+        "https://notice.naver.com/api/v1/services/privacypolicy/contents/key/popup03",
+        "https://gam.naver.com/optout/main",
+        "https://www.sedaily.com/article/12671656",
+        "https://biz.newdaily.co.kr/site/data/html/2024/04/03/2024040300150.amp.html"
+      ],
+      "policy": "https://policy.naver.com/policy/privacy.html",
+      "collectsNote": "생체 = 「네이버 신분증」 얼굴사진(해당 서비스 이용 시)",
+      "thirdPartyLabel": "92건",
+      "thirdPartyNote": "제3자 제공 표 92행(서비스 × 제공받는 자). 고유 업체 수 아님"
+    },
+    {
+      "id": "coupang",
+      "name": "쿠팡",
+      "company": "쿠팡",
+      "emoji": "📦",
+      "researched": true,
+      "collects": {
+        "behavior": true,
+        "location": true,
+        "payment": true,
+        "biometric": null
+      },
+      "thirdPartyCount": 14,
+      "incidents": [
+        {
+          "title": "3,370만 계정 정보 유출",
+          "year": 2025,
+          "url": "https://www.mt.co.kr/tech/2025/11/30/2025113014380059809",
+          "verified": true
+        },
+        {
+          "title": "개인정보위 과징금 6,246억원(역대 최대)",
+          "year": 2026,
+          "url": "https://www.ddaily.co.kr/page/view/2026061114464182391",
+          "verified": true
+        }
+      ],
+      "actions": {
+        "download": {
+          "url": "https://privacy.coupang.com/ko/center/coupang/",
+          "verified": true,
+          "note": "마이쿠팡 › 내정보 관리 › 회원정보 수정(처리방침 5항)"
+        },
+        "delete": {
+          "url": null,
+          "verified": false,
+          "note": "검색·최근 본 상품 기록 삭제 공식 도움말 못 찾음"
+        },
+        "ads": {
+          "url": "https://privacy.coupang.com/ko/center/coupang/",
+          "verified": true,
+          "note": "앱 안 끄기 버튼 안내 없음 — 처리방침은 폰 설정(광고 ID 삭제·추적 끄기)으로 차단하라고 함. 맞춤형 광고 선택 동의 철회도 가능(메뉴 위치는 방침에 없음)"
+        },
+        "thirdParty": {
+          "url": "https://privacy.coupang.com/ko/center/coupang/",
+          "verified": true,
+          "note": "회원탈퇴 또는 고객센터 1600-3733(처리방침 2항)"
+        }
+      },
+      "sources": [
+        "https://privacy.coupang.com/ko/center/coupang/",
+        "https://www.ajunews.com/view/20251203144105175",
+        "http://www.boannews.com/news/articleView.html?idxno=144068",
+        "https://www.khan.co.kr/article/202606111625021/amp"
+      ],
+      "policy": "https://privacy.coupang.com/ko/center/coupang/",
+      "collectsNote": "",
+      "thirdPartyLabel": "판매자 + 약 14곳",
+      "thirdPartyNote": "첫 줄이 「판매자 – 업체 리스트」(오픈마켓 셀러 전원) + 동의 기반 업체 약 14곳"
+    },
+    {
+      "id": "musinsa",
+      "name": "무신사",
+      "company": "무신사",
+      "emoji": "👕",
+      "researched": true,
+      "collects": {
+        "behavior": true,
+        "location": true,
+        "payment": true,
+        "biometric": null
+      },
+      "thirdPartyCount": 3,
+      "incidents": [
+        {
+          "title": "다른 회원 배송지 노출, 과태료 1,080만원",
+          "year": 2023,
+          "url": "https://byline.network/2023/06/0614_02/",
+          "verified": true
+        },
+        {
+          "title": "계열 29CM 주문정보 약 16만건 유출",
+          "year": 2026,
+          "url": "https://www.ddaily.co.kr/page/view/2026083014004455741",
+          "verified": true
+        }
+      ],
+      "actions": {
+        "download": {
+          "url": "https://www.29cm.co.kr/home/private",
+          "verified": true,
+          "note": "마이 › 설정 › 회원정보 변경에서 열람(통합 처리방침 7항)"
+        },
+        "delete": {
+          "url": "https://www.29cm.co.kr/home/private",
+          "verified": true,
+          "note": "기록만 지우는 메뉴 없음 — 회원탈퇴(5일 후 파기)"
+        },
+        "ads": {
+          "url": "https://www.29cm.co.kr/home/private",
+          "verified": true,
+          "note": "앱 안 끄기 버튼 없음 — 처리방침 10.2: 폰 설정에서 광고 ID 삭제(안드로이드)·앱 추적 허용 끄기(iPhone)"
+        },
+        "thirdParty": {
+          "url": "https://www.29cm.co.kr/home/private",
+          "verified": true,
+          "note": "개인정보 보호책임자에게 요청 또는 회원탈퇴"
+        }
+      },
+      "sources": [
+        "https://www.29cm.co.kr/home/private",
+        "https://byline.network/2023/06/0614_02/",
+        "https://www.hankyung.com/article/2026083013567",
+        "https://news.mtn.co.kr/news-detail/2026083109235272017"
+      ],
+      "policy": "https://www.29cm.co.kr/home/private",
+      "collectsNote": "",
+      "thirdPartyLabel": "3곳 + 입점 판매자",
+      "thirdPartyNote": "동의 기반 3곳(무신사페이먼츠·엘오케이·버즈빌) + 동의 없이 제공하는 입점 판매자(범주)"
+    },
+    {
+      "id": "toss",
+      "name": "토스",
+      "company": "비바리퍼블리카",
+      "emoji": "💙",
+      "researched": true,
+      "collects": {
+        "behavior": true,
+        "location": true,
+        "payment": true,
+        "biometric": true
+      },
+      "thirdPartyCount": 266,
+      "incidents": [
+        {
+          "title": "금감원 과징금 53.7억원(동의 없는 정보 결합 등)",
+          "year": 2024,
+          "url": "https://www.smarttoday.co.kr/ko-kr/articles/62781",
+          "verified": true
+        },
+        {
+          "title": "상담솔루션 해킹, 고객 약 1,500명 유출",
+          "year": 2021,
+          "url": "https://v.daum.net/v/20210723162302245",
+          "verified": true
+        }
+      ],
+      "actions": {
+        "download": {
+          "url": "https://toss.im/privacy-policy?id=52893",
+          "verified": true,
+          "note": "전체 › 설정 › 내 정보·주소 관리(처리방침 ⑦)"
+        },
+        "delete": {
+          "url": "https://toss.im/privacy-policy?id=52893",
+          "verified": true,
+          "note": "내 정보·주소 관리에서 삭제 요구 또는 고객센터"
+        },
+        "ads": {
+          "url": "https://toss.im/privacy-policy?id=52893",
+          "verified": true,
+          "note": "전체 › 설정 › 알림 › 혜택·마케팅 알림 끄기"
+        },
+        "thirdParty": {
+          "url": "https://toss.im/privacy-policy?id=52893",
+          "verified": true,
+          "note": "전체 › 설정 › 약관 및 개인정보 처리 동의 › 동의 철회하기"
+        }
+      },
+      "sources": [
+        "https://toss.im/privacy-policy?id=52893",
+        "https://toss.im/privacy-policy?id=20917",
+        "https://toss.im/privacy-policy?id=44715",
+        "https://toss.im/privacy-policy?id=20918",
+        "https://www.segye.com/newsView/20241028516823",
+        "https://v.daum.net/v/20210723162302245"
+      ],
+      "policy": "https://toss.im/privacy-policy?id=52893",
+      "collectsNote": "생체 = 페이스패스·모바일 신분증 얼굴정보",
+      "thirdPartyLabel": "266건",
+      "thirdPartyNote": "동의 기반 제3자 제공 표 266행(같은 업체 반복·여러 업체 묶음 포함). 고유 업체 수 아님"
+    },
+    {
+      "id": "baemin",
+      "name": "배달의민족",
+      "company": "우아한형제들",
+      "emoji": "🛵",
+      "researched": true,
+      "collects": {
+        "behavior": true,
+        "location": true,
+        "payment": true,
+        "biometric": null
+      },
+      "thirdPartyCount": 24,
+      "incidents": [
+        {
+          "title": "외주 상담사 위장취업, 고객 주소 약 1,000건 무단조회",
+          "year": 2026,
+          "url": "https://www.khan.co.kr/article/202604020834001",
+          "verified": true
+        },
+        {
+          "title": "상담솔루션 해킹, 상담 1만여건 유출",
+          "year": 2021,
+          "url": "https://v.daum.net/v/20210723162302245",
+          "verified": true
+        }
+      ],
+      "actions": {
+        "download": {
+          "url": "https://terms.baemin.com/content/BAEMIN_102",
+          "verified": true,
+          "note": "My배민 › 내 정보 수정(처리방침 7항)"
+        },
+        "delete": {
+          "url": "https://terms.baemin.com/content/BAEMIN_102",
+          "verified": true,
+          "note": "이용내역만 지우는 메뉴 없음 — 내 정보 수정 › 가입해지"
+        },
+        "ads": {
+          "url": "https://terms.baemin.com/content/BAEMIN_102",
+          "verified": true,
+          "note": "My배민 › 환경설정 › 맞춤형 광고 해제(9항)"
+        },
+        "thirdParty": {
+          "url": null,
+          "verified": false,
+          "note": "철회 전용 메뉴 없음 — 1600-0987 문의(처리방침 7항)"
+        }
+      },
+      "sources": [
+        "https://terms.baemin.com/content/BAEMIN_102",
+        "https://terms-api.baemin.com/v1/terms/current?termsCode=BAEMIN_102",
+        "https://www.hankyung.com/article/2026033061227",
+        "https://v.daum.net/v/20210723162302245",
+        "https://www.fnnews.com/news/202610150947035203"
+      ],
+      "policy": "https://terms.baemin.com/content/BAEMIN_102",
+      "collectsNote": "",
+      "thirdPartyLabel": "입점업체 + 24곳",
+      "thirdPartyNote": "첫 줄이 입점업체 전체 + 제공받는 자 24항목(표 25행)"
+    },
+    {
+      "id": "map",
+      "name": "지도앱",
+      "company": "네이버지도·카카오맵 등",
+      "emoji": "🗺️",
+      "researched": true,
+      "collects": {
+        "behavior": true,
+        "location": true,
+        "payment": true,
+        "biometric": null
+      },
+      "thirdPartyCount": 4,
+      "incidents": [],
+      "actions": {
+        "download": {
+          "url": "https://nid.naver.com/user2/help/myInfoV2?lang=ko_KR",
+          "verified": true,
+          "note": "네이버지도 = 네이버ID 내정보 / 카카오맵 = 카카오계정"
+        },
+        "delete": {
+          "url": null,
+          "verified": false,
+          "note": "길찾기·이동 기록 삭제 공식 도움말 못 찾음"
+        },
+        "ads": {
+          "url": "https://gam.naver.com/optout/main",
+          "verified": true,
+          "note": "네이버 맞춤형 광고 차단 / 카카오는 info.ds.kakao.com"
+        },
+        "thirdParty": {
+          "url": "https://nid.naver.com/internalToken/view/tokenList/pc/ko",
+          "verified": true,
+          "note": "연결 서비스 관리 / 카카오계정 › 연결된 서비스"
+        }
+      },
+      "sources": [
+        "https://policy.naver.com/policy/privacy.html",
+        "https://www.kakao.com/policy/privacy",
+        "https://notice.naver.com/api/v1/services/privacypolicy/contents/key/popup03",
+        "https://info.ds.kakao.com/optout.do",
+        "http://www.boannews.com/news/articleView.html?idxno=130023"
+      ],
+      "policy": "https://policy.naver.com/policy/privacy.html",
+      "collectsNote": "네이버·카카오 회사 전체 처리방침 기준(지도앱만 따로 된 방침 없음)",
+      "thirdPartyLabel": "4건 이상",
+      "thirdPartyNote": "네이버 표 중 「네이버 지도」 4행. 카카오맵 목록은 못 읽음"
+    },
+    {
+      "id": "transit",
+      "name": "교통카드",
+      "company": "티머니·캐시비 등",
+      "emoji": "🚇",
+      "researched": true,
+      "collects": {
+        "behavior": true,
+        "location": true,
+        "payment": true,
+        "biometric": null
+      },
+      "thirdPartyCount": 2,
+      "incidents": [
+        {
+          "title": "5만여명 계정 털림, 과징금 5.34억원",
+          "year": 2025,
+          "url": "https://www.hankyung.com/article/202601290485Y",
+          "verified": true
+        }
+      ],
+      "actions": {
+        "download": {
+          "url": null,
+          "verified": false,
+          "note": "이용내역 조회 공식 페이지 못 찾음 — 고객센터 1644-0088"
+        },
+        "delete": {
+          "url": null,
+          "verified": false,
+          "note": "탈퇴·삭제 경로 못 찾음 — 고객센터 1644-0088"
+        },
+        "ads": {
+          "url": null,
+          "verified": false,
+          "note": "마케팅 수신 철회 페이지 못 찾음"
+        },
+        "thirdParty": {
+          "url": null,
+          "verified": false,
+          "note": "제3자 제공 철회 절차 못 찾음"
+        }
+      },
+      "sources": [
+        "https://pay.tmoney.co.kr/jsp/ncs/pct/cmn/IndlInfTrt.jsp",
+        "https://www.tmoney.co.kr/aeb/html/privacyPolicy/tmyGoPrivacyPolicy01.dev",
+        "https://www.tmoney.co.kr/aeb/html/privacyPolicy/tmyGoPrivacyPolicy00.dev",
+        "https://www.hankyung.com/article/202601290485Y",
+        "https://www.smarttoday.co.kr/ko-kr/articles/102414",
+        "https://biz.sbs.co.kr/amp/article/20000288327"
+      ],
+      "policy": "https://pay.tmoney.co.kr/jsp/ncs/pct/cmn/IndlInfTrt.jsp",
+      "collectsNote": "위치 = 승하차 역·정류장·노선·시간(안심 위치 조회 시)",
+      "thirdPartyLabel": "2곳",
+      "thirdPartyNote": "서울특별시, ㈜티머니모빌리티(티머니 처리방침 2026-02-19 시행본)"
+    },
+    {
+      "id": "instagram",
+      "name": "인스타그램",
+      "company": "Meta",
+      "emoji": "📸",
+      "researched": true,
+      "collects": {
+        "behavior": true,
+        "location": true,
+        "payment": true,
+        "biometric": null
+      },
+      "thirdPartyCount": null,
+      "incidents": [
+        {
+          "title": "메타 과징금 308억원(동의 없는 행태정보 수집)",
+          "year": 2022,
+          "url": "https://www.ajunews.com/view/20220914131004945",
+          "verified": true
+        },
+        {
+          "title": "인스타그램 과징금 8.86억원(후속 제재)",
+          "year": 2023,
+          "url": "https://www.ddaily.co.kr/page/view/2023072711234239431",
+          "verified": true
+        }
+      ],
+      "actions": {
+        "download": {
+          "url": "https://help.instagram.com/181231772500920",
+          "verified": true,
+          "note": "설정 › 계정 센터 › 내 정보 및 권한 › 정보 다운로드"
+        },
+        "delete": {
+          "url": "https://help.instagram.com/354860134605952",
+          "verified": true,
+          "note": "검색 기록 삭제 · 계정 센터에서 계정 삭제"
+        },
+        "ads": {
+          "url": "https://help.instagram.com/426488546963771",
+          "verified": true,
+          "note": "계정 센터 › 광고 환경설정"
+        },
+        "thirdParty": {
+          "url": "https://help.instagram.com/1144624522593085",
+          "verified": true,
+          "note": "설정 › 앱 및 웹사이트 › 제거"
+        }
+      },
+      "sources": [
+        "https://www.facebook.com/privacy/policy/",
+        "https://privacycenter.instagram.com/policy",
+        "https://help.instagram.com/181231772500920",
+        "https://help.instagram.com/426488546963771/",
+        "https://help.instagram.com/1144624522593085",
+        "https://www.facebook.com/help/instagram/354860134605952",
+        "https://mobile.newsis.com/view/NISX20220914_0002012372",
+        "https://www.newsis.com/view/NISX20230727_0002392178"
+      ],
+      "policy": "https://www.facebook.com/privacy/policy/",
+      "collectsNote": "생체: 얼굴 인식은 직접 켤 때만이라는 문구뿐 → 확인 안 됨으로 둠",
+      "thirdPartyLabel": null,
+      "thirdPartyNote": "Meta 한국 고지사항의 제공 표를 못 읽음"
+    },
+    {
+      "id": "ddareungi",
+      "name": "따릉이",
+      "company": "서울시설공단",
+      "emoji": "🚲",
+      "researched": true,
+      "collects": {
+        "behavior": null,
+        "location": true,
+        "payment": true,
+        "biometric": null
+      },
+      "thirdPartyCount": 3,
+      "incidents": [
+        {
+          "title": "회원정보 약 462만건 유출(2026년 공개)",
+          "year": 2024,
+          "url": "https://www.khan.co.kr/article/202607212106015",
+          "verified": true
+        }
+      ],
+      "actions": {
+        "download": {
+          "url": "https://www.bikeseoul.com/app/use/moveUseMenuClauseInfo.do?tabInfo=2",
+          "verified": true,
+          "note": "앱 내정보 › 회원정보 변경 / 웹 나의 공간(처리방침 8조)"
+        },
+        "delete": {
+          "url": "https://www.bikeseoul.com/app/use/moveUseMenuClauseInfo.do?tabInfo=2",
+          "verified": true,
+          "note": "기록만 지우는 메뉴 없음 — 회원탈퇴"
+        },
+        "ads": {
+          "url": null,
+          "verified": false,
+          "note": "처리방침에 마케팅 수신 철회 방법 없음"
+        },
+        "thirdParty": {
+          "url": "https://www.bikeseoul.com/app/use/moveUseMenuClauseInfo.do?tabInfo=2",
+          "verified": true,
+          "note": "위치정보 제3자 제공은 회원탈퇴로 철회(위치약관 9조)"
+        }
+      },
+      "sources": [
+        "https://www.bikeseoul.com/app/use/moveUseMenuClauseInfo.do?tabInfo=2",
+        "https://www.heraldk.com/article/2026022220450023340",
+        "https://mobile.newsis.com/view/NISX20260206_0003505448",
+        "https://www.mt.co.kr/tech/2026/02/01/2026020109343838465"
+      ],
+      "policy": "https://www.bikeseoul.com/app/use/moveUseMenuClauseInfo.do?tabInfo=2",
+      "collectsNote": "결제 = 환불용 계좌번호. 위치정보 6개월 보관",
+      "thirdPartyLabel": "3곳",
+      "thirdPartyNote": "㈜티머니, ㈜비바리퍼블리카(토스), 한국환경산업기술원(처리방침 4조)"
+    }
+  ]
+}
