@@ -608,16 +608,19 @@ function summarizeExperiment(rows) {
     const base = (list.find(r => r.phase === '기준') || list[0]).share;
     const inject = list.filter(r => r.phase === '주입');
     const recover = list.filter(r => r.phase === '회복');
-    const peak = inject.length ? Math.max(...inject.map(r => r.share)) : null;
+    const isCtl = /대조/.test(account + list[0].topic);
+    const peakPool = isCtl ? list.filter(r => r.phase !== '기준') : inject; // 대조군은 주입이 없어 기준 빼고 전부
+    const peak = peakPool.length ? Math.max(...peakPool.map(r => r.share)) : null;
     const dyed = inject.find(r => r.share >= 0.5); // 홈 피드 절반이 그 주제로 찬 날
     const firstRec = recover[0]?.day;
-    const back = recover.find(r => r.share <= base + 0.1); // 기준선 +10%p 안으로 돌아온 날
+    // 회복 끝 = 기준선 +5%p(20개 중 1개) 안에 이틀 연속 든 날(최종보고서 2절 기준. 끝난 날 = 이틀째)
+    const back = recover.find((r, i) => i > 0 && r.share <= base + 0.05 + 1e-9 && recover[i - 1].share <= base + 0.05 + 1e-9);
     return {
       account, topic: list[0].topic, dose: list[0].dose, list, base, peak,
       control: /대조/.test(account + list[0].topic),
       color: /대조/.test(account + list[0].topic) ? '#8A93B8' : EXP_COLORS[i % (EXP_COLORS.length - 1)],
       dyedDay: dyed ? dyed.day : null,
-      recoverDays: back && firstRec != null ? back.day - firstRec + 1 : null,
+      recoverDays: back && firstRec != null ? back.day - firstRec : null,
       recoverStart: firstRec ?? null, recovering: recover.length > 0,
     };
   });
@@ -631,9 +634,9 @@ function showExperiment(rows, isSample) {
   const kp = $('#expKpis');
   kp.hidden = false;
   kp.replaceChildren(...sums.map(s => h('div', { class: 'kpi exp-kpi', style: `--c:${s.color}` },
-    h('span', {}, `${s.account} · ${s.topic}${s.dose ? ' · ' + s.dose : ''}`),
-    s.control ? h('b', {}, '비교용') : h('b', {}, s.dyedDay != null ? `${s.dyedDay}일` : '–'),
-    s.control ? h('small', {}, ' 주제 없이 홈만 봄') : h('small', {}, s.dyedDay != null ? '만에 절반이 물듦' : ' 아직 절반 안 됨'),
+    h('span', {}, `${s.account} · ${s.topic}${s.dose && s.dose !== '-' ? ' · ' + s.dose : ''}`),
+    s.control ? h('b', {}, '비교용') : h('b', {}, s.dyedDay != null ? `${s.dyedDay}일차` : '–'),
+    s.control ? h('small', {}, ' 주제 없이 홈만 봄') : h('small', {}, s.dyedDay != null ? '에 홈 절반이 물듦' : ' 홈 절반을 못 채움'),
     s.control ? h('em', {}, `최고 ${s.peak != null ? Math.round(s.peak * 100) + '%' : '–'}`) : h('em', {}, s.recovering ? (s.recoverDays != null ? `회복 ${s.recoverDays}일` : '회복 중 · 아직 안 돌아옴') : `최고 ${s.peak != null ? Math.round(s.peak * 100) + '%' : '–'}`))));
   drawExperiment(sums);
 }
@@ -691,3 +694,13 @@ function renderConclusion() {
     h('i', { class: 'ok', style: `flex:${direct}` }), h('i', { class: 'mid', style: `flex:${policyOnly}` }), h('i', { class: 'bad', style: `flex:${none}` }));
   $('#conclNote').textContent = `앱 ${DATA.apps.length}개 × 권리 ${Object.keys(DATA.actionTypes).length}개 = ${total}개 기준 · 앱을 몇 개 골랐든 전체 앱으로 셌어요 · ${DATA.meta.updated} 조사`;
 }
+
+// 체험 페이지(algorithm.html)가 함께 배포된 곳에서만 버튼을 보인다(공개 사이트엔 아직 안 올렸을 수 있음).
+(async () => {
+  const wrap = document.getElementById('algoLinkWrap');
+  if (!wrap) return;
+  try {
+    const r = await fetch('algo/data.json', { method: 'HEAD', cache: 'no-store' });
+    if (r.ok) wrap.hidden = false;
+  } catch (e) { /* 못 읽으면 숨긴 채로 둔다 */ }
+})();
